@@ -2510,7 +2510,7 @@
       "required": true,
       "types": [
         {
-          "type": "doc_comment_inner",
+          "type": "doc_comment_content",
           "named": true
         }
       ]
@@ -3180,7 +3180,7 @@
       "required": true,
       "types": [
         {
-          "type": "doc_comment_inner",
+          "type": "doc_comment_content",
           "named": true
         }
       ]
@@ -5259,7 +5259,7 @@
     "named": false
   },
   {
-    "type": "doc_comment_inner",
+    "type": "doc_comment_content",
     "named": true
   },
   {

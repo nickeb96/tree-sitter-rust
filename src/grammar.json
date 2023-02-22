@@ -8969,7 +8969,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "doc_comment_inner"
+          "name": "doc_comment_content"
         }
       ]
     },
@@ -8982,11 +8982,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "doc_comment_inner"
+          "name": "doc_comment_content"
         }
       ]
     },
-    "doc_comment_inner": {
+    "doc_comment_content": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
