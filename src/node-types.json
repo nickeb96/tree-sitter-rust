@@ -16,6 +16,10 @@
         "named": true
       },
       {
+        "type": "doc_comment_block",
+        "named": true
+      },
+      {
         "type": "empty_statement",
         "named": true
       },
@@ -174,6 +178,10 @@
         "named": true
       },
       {
+        "type": "let_else_expression",
+        "named": true
+      },
+      {
         "type": "loop_expression",
         "named": true
       },
@@ -215,6 +223,10 @@
       },
       {
         "type": "struct_expression",
+        "named": true
+      },
+      {
+        "type": "try_block",
         "named": true
       },
       {
@@ -1036,6 +1048,10 @@
             "named": true
           },
           {
+            "type": "let_else_expression",
+            "named": true
+          },
+          {
             "type": "loop_expression",
             "named": true
           },
@@ -1073,6 +1089,10 @@
           },
           {
             "type": "struct_expression",
+            "named": true
+          },
+          {
+            "type": "try_block",
             "named": true
           },
           {
@@ -1406,6 +1426,25 @@
     }
   },
   {
+    "type": "doc_comment_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "inner_doc_comment",
+          "named": true
+        },
+        {
+          "type": "outer_doc_comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "dynamic_type",
     "named": true,
     "fields": {
@@ -1579,6 +1618,10 @@
           "named": true
         },
         {
+          "type": "doc_comment_block",
+          "named": true
+        },
+        {
           "type": "enum_variant",
           "named": true
         }
@@ -1701,6 +1744,10 @@
       "types": [
         {
           "type": "attribute_item",
+          "named": true
+        },
+        {
+          "type": "doc_comment_block",
           "named": true
         },
         {
@@ -2455,6 +2502,21 @@
     }
   },
   {
+    "type": "inner_doc_comment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "doc_comment_inner",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "let_declaration",
     "named": true,
     "fields": {
@@ -2498,6 +2560,150 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "let_else_expression",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "else_clause",
+            "named": true
+          }
+        ]
+      },
+      "pattern": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_pattern",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_literal",
+            "named": true
+          },
+          {
+            "type": "array_expression",
+            "named": true
+          },
+          {
+            "type": "assignment_expression",
+            "named": true
+          },
+          {
+            "type": "await_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "break_expression",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "closure_expression",
+            "named": true
+          },
+          {
+            "type": "compound_assignment_expr",
+            "named": true
+          },
+          {
+            "type": "continue_expression",
+            "named": true
+          },
+          {
+            "type": "field_expression",
+            "named": true
+          },
+          {
+            "type": "generic_function",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index_expression",
+            "named": true
+          },
+          {
+            "type": "macro_invocation",
+            "named": true
+          },
+          {
+            "type": "metavariable",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "reference_expression",
+            "named": true
+          },
+          {
+            "type": "return_expression",
+            "named": true
+          },
+          {
+            "type": "scoped_identifier",
+            "named": true
+          },
+          {
+            "type": "self",
+            "named": true
+          },
+          {
+            "type": "struct_expression",
+            "named": true
+          },
+          {
+            "type": "try_expression",
+            "named": true
+          },
+          {
+            "type": "tuple_expression",
+            "named": true
+          },
+          {
+            "type": "type_cast_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          },
+          {
+            "type": "unit_expression",
+            "named": true
+          },
+          {
+            "type": "yield_expression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2960,6 +3166,21 @@
         },
         {
           "type": "visibility_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "outer_doc_comment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "doc_comment_inner",
           "named": true
         }
       ]
@@ -4025,6 +4246,21 @@
     }
   },
   {
+    "type": "try_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "try_expression",
     "named": true,
     "fields": {},
@@ -5023,6 +5259,10 @@
     "named": false
   },
   {
+    "type": "doc_comment_inner",
+    "named": true
+  },
+  {
     "type": "dyn",
     "named": false
   },
@@ -5200,6 +5440,10 @@
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "try",
     "named": false
   },
   {

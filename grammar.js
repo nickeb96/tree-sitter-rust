@@ -124,6 +124,8 @@ module.exports = grammar({
     [$.parameters, $._pattern],
     [$.parameters, $.tuple_struct_pattern],
     [$.type_parameters, $.for_lifetimes],
+    [$.if_expression],
+    [$.if_let_expression],
   ],
 
   word: $ => $.identifier,
@@ -164,7 +166,8 @@ module.exports = grammar({
       $.let_declaration,
       $.use_declaration,
       $.extern_crate_declaration,
-      $.static_item
+      $.static_item,
+      $.doc_comment_block,
     ),
 
     // Section - Macro definitions
@@ -377,7 +380,7 @@ module.exports = grammar({
 
     enum_variant_list: $ => seq(
       '{',
-      sepBy(',', seq(repeat($.attribute_item), $.enum_variant)),
+      sepBy(',', seq(optional($.doc_comment_block), repeat($.attribute_item), $.enum_variant)),
       optional(','),
       '}'
     ),
@@ -397,7 +400,7 @@ module.exports = grammar({
 
     field_declaration_list: $ => seq(
       '{',
-      sepBy(',', seq(repeat($.attribute_item), $.field_declaration)),
+      sepBy(',', seq(optional($.doc_comment_block), repeat($.attribute_item), $.field_declaration)),
       optional(','),
       '}'
     ),
@@ -909,7 +912,7 @@ module.exports = grammar({
 
     // Section - Expressions
 
-    _expression_except_range: $ => choice(
+    _expression_not_ending_with_block: $ => choice(
       $.unary_expression,
       $.reference_expression,
       $.try_expression,
@@ -940,7 +943,11 @@ module.exports = grammar({
       $.closure_expression,
       $.parenthesized_expression,
       $.struct_expression,
-      $._expression_ending_with_block,
+    ),
+
+    _expression_except_range: $ => choice(
+      $._expression_not_ending_with_block,
+      $._expression_ending_with_block
     ),
 
     _expression: $ => choice(
@@ -954,12 +961,14 @@ module.exports = grammar({
       $.block,
       $.if_expression,
       $.if_let_expression,
+      $.let_else_expression,
       $.match_expression,
       $.while_expression,
       $.while_let_expression,
       $.loop_expression,
       $.for_expression,
-      $.const_block
+      $.const_block,
+      $.try_block
     ),
 
     macro_invocation: $ => seq(
@@ -1199,6 +1208,14 @@ module.exports = grammar({
       )
     ),
 
+    let_else_expression: $ => seq(
+      'let',
+      field('pattern', $._pattern),
+      '=',
+      field('value', $._expression_not_ending_with_block),
+      field('alternative', $.else_clause)
+    ),
+
     match_expression: $ => seq(
       'match',
       field('value', $._expression),
@@ -1235,6 +1252,11 @@ module.exports = grammar({
     match_pattern: $ => seq(
       $._pattern,
       optional(seq('if', field('condition', $._expression)))
+    ),
+
+    try_block: $ => seq(
+      'try',
+      $.block
     ),
 
     while_expression: $ => seq(
@@ -1420,7 +1442,7 @@ module.exports = grammar({
         $._literal_pattern,
         $._path,
       ),
-      choice('...', '..='),
+      choice('..', '..='),
       choice(
         $._literal_pattern,
         $._path,
@@ -1521,12 +1543,35 @@ module.exports = grammar({
 
     comment: $ => choice(
       $.line_comment,
-      $.block_comment
+      $.block_comment,
     ),
 
-    line_comment: $ => token(seq(
-      '//', /.*/
-    )),
+    doc_comment_block: $ => prec.right(
+      choice(
+        repeat1($.outer_doc_comment),
+        repeat1($.inner_doc_comment),
+      )
+    ),
+
+    outer_doc_comment: $ => seq(
+      /\/\/\//,
+      $.doc_comment_content,
+    ),
+
+    inner_doc_comment: $ => seq(
+      /\/\/!/,
+      $.doc_comment_content,
+    ),
+
+    doc_comment_content: $ => token(/[^\n]*/),
+
+    line_comment: $ => token(
+      choice(
+        seq('////', /.*/),
+        seq('//', /[^\/!\n]/, /.*/),
+        '//'
+      )
+    ),
 
     _path: $ => choice(
       $.self,
